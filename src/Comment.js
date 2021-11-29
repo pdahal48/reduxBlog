@@ -1,13 +1,13 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap';
 
-const Comment = ({ comment, delComment }) => {
+const Comment = ({ comment, delComment, id }) => {
     return (
         <div>
             <Row>
                 <Col className="col-10 text-secondary">
                     <span className="del-btn mx-2" onClick={delComment}>X</span>
-                    {comment}
+                    <span>{comment}</span>
                 </Col>
             </Row>
         </div>
