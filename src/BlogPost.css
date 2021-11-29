@@ -1,0 +1,24 @@
+.post-title {
+    font-size: 2rem;
+}
+
+.post-desc {
+    font-size: 1.2rem;
+}
+
+.post-body {
+    font-size: 1.1rem;
+}
+
+.del-icon {
+    font-weight: bolder;
+    font-size: 1.3rem;
+    cursor:pointer;
+}
+
+.edit-icon {
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+

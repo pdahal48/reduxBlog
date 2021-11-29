@@ -1,0 +1,10 @@
+.Navbox {
+    background-color: grey;
+    font-size: 2rem;
+    border-radius: 10px;
+}
+
+.lead a {
+    color: burlywood;
+    text-decoration: none;
+}
