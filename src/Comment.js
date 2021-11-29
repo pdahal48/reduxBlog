@@ -6,7 +6,13 @@ const Comment = ({ comment, delComment, id }) => {
         <div>
             <Row>
                 <Col className="col-10 text-secondary">
-                    <span className="del-btn mx-2" onClick={delComment}>X</span>
+                    <span 
+                        className="del-btn mx-2" 
+                        id={id}
+                        onClick={delComment}
+                    >
+                        X
+                    </span>
                     <span>{comment}</span>
                 </Col>
             </Row>

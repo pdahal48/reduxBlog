@@ -15,17 +15,14 @@ const Comments = () => {
     }
 
     const [formData, setFormData] = useState(INITIAL_STATE);
+    useEffect(() => getComments(), [id, formData])
 
-    useEffect(()=> {
-        function getComments() {
-            let postComments = Object.keys(blogComments).filter((commentId) => (
-                    blogComments[commentId]['postId'] === id
-            ));
-            setReviews(postComments)
-        };
-        getComments();
-
-    }, [id, formData])
+    function getComments() {
+        let postComments = Object.keys(blogComments).filter((commentId) => (
+                blogComments[commentId]['postId'] === id
+        ));
+        setReviews(postComments)
+    };
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -33,7 +30,6 @@ const Comments = () => {
     }
 
     const handleAdd = () => {
-        console.log('comment add requested with', formData.newComment)
         blogComments[uuid()] = {
             "postId": id,
             "comment": formData.newComment
@@ -41,8 +37,9 @@ const Comments = () => {
         setFormData(INITIAL_STATE)
     }
 
-    function delComment() {
-        console.log('comment delete requested')
+    function delComment(e) {
+        delete blogComments[e.target.id]
+        getComments()
     }
     
     return (
@@ -53,6 +50,7 @@ const Comments = () => {
                     <Comment 
                         comment = {blogComments[r]['comment']}
                         key={blogComments[r]['id']}
+                        id={r}
                         delComment = {delComment}
                     />
                 ))}
