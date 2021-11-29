@@ -15,8 +15,10 @@ const Home = () => {
                     {Object.keys(Posts).map((id) => {
                         return (
                             <Post 
-                            id = {id}
                             key= {id}
+                            id= {id}
+                            title = {Posts[id].title}
+                            description = {Posts[id].description}
                         />
                     )})}
                 </Row>
