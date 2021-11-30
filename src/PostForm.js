@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid';
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { addPost } from './Redux/actions';
 
-
 const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
 
     const [formData, setFormData] = useState(INITIAL_STATE);
