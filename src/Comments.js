@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react'
-import { blogComments } from './db.json';
 import { useParams } from 'react-router-dom'
 import Comment from './Comment';
 import { Form, Row, Col } from 'react-bootstrap';
 import { v4 as uuid } from 'uuid';
+import { useSelector, shallowEqual } from 'react-redux';
 import './Comments.css'
 
 const Comments = () => {
     const { id } = useParams();
     const [reviews, setReviews] = useState([]);
+    const { postComments } = useSelector((store) => store, shallowEqual);
 
     const INITIAL_STATE = {
         newComment: ""
@@ -18,10 +19,10 @@ const Comments = () => {
     useEffect(() => getComments(), [id, formData])
 
     function getComments() {
-        let postComments = Object.keys(blogComments).filter((commentId) => (
-                blogComments[commentId]['postId'] === id
+        const blogComments = Object.keys(postComments).filter((commentId) => (
+            postComments[commentId]['postId'] === id
         ));
-        setReviews(postComments)
+        setReviews(blogComments)
     };
 
     const handleChange = (e) => {
@@ -30,7 +31,7 @@ const Comments = () => {
     }
 
     const handleAdd = () => {
-        blogComments[uuid()] = {
+        postComments[uuid()] = {
             "postId": id,
             "comment": formData.newComment
         }
@@ -38,7 +39,7 @@ const Comments = () => {
     }
 
     function delComment(e) {
-        delete blogComments[e.target.id]
+        delete postComments[e.target.id]
         getComments()
     }
     
@@ -48,8 +49,8 @@ const Comments = () => {
             <div>
                 {reviews.map((r) => (
                     <Comment 
-                        comment = {blogComments[r]['comment']}
-                        key={blogComments[r]['id']}
+                        comment = {postComments[r]['comment']}
+                        key={postComments[r]['id']}
                         id={r}
                         delComment = {delComment}
                     />

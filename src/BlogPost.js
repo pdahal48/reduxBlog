@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { Posts } from './db.json'
+import PostForm from './PostForm'
+import Comments from './Comments'
 import { Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import PostForm from './PostForm'
-import Comments from './Comments'
 import './BlogPost.css'
+import { shallowEqual, useSelector } from 'react-redux'
 
 const editIcon = <FontAwesomeIcon icon={faEdit} />
 
@@ -14,9 +14,10 @@ const BlogPost = () => {
 
     const { id } = useParams();
     const [editRequested, setEditRequested] = useState(false);
+    const { blogPosts } = useSelector((store) => store, shallowEqual)
 
-   const navigate = useNavigate(); 
-    let post = Posts[id]
+    const navigate = useNavigate(); 
+    let post = blogPosts[id]
 
     const INITIAL_STATE = {
         title: post.title,
@@ -29,8 +30,8 @@ const BlogPost = () => {
         setEditRequested(true);
     }
 
-    const handleDelete = (e) => {
-        delete Posts[id];
+    const handleDelete = () => {
+        delete blogPosts[id];
         navigate('/')
     }
     
@@ -45,7 +46,6 @@ const BlogPost = () => {
             </Container>
             : 
             <Container className="container">
-                {post ?
                 <div className="container col-9 mt-5">
                     <div>
                     <Row>
@@ -72,11 +72,6 @@ const BlogPost = () => {
                         <Comments />
                     </div>
                 </div>
-                : 
-                <div>
-                    <h3 className="text-secondary">No Post with that Id</h3>
-                </div>
-                }
             </Container>
         }
         </div>

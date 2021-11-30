@@ -3,26 +3,33 @@ import { Form, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import { Validate } from './helpers'
 import { v4 as uuid } from 'uuid';
-import { Posts } from './db.json';
+import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import { addPost } from './Redux/actions';
+
 
 const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
 
     const [formData, setFormData] = useState(INITIAL_STATE);
+    const dispatch = useDispatch();
+    const { blogPosts } = useSelector((store) => store, shallowEqual)
 
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormData(data => ({...data, [name]: value}));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = () => {
         if (Validate(formData.title, formData.description, formData.body)) {
-            Posts[uuid()] = {...formData}    
-        }
-    }
+            let id = uuid()
+            dispatch(addPost({
+               id, 
+               post: formData
+            }))  
+    }}
 
-    const handleEditSubmit = (e) => {
+    const handleEditSubmit = () => {
         if (Validate(formData.title, formData.description, formData.body)) {
-            Posts[id] = {...formData}
+            blogPosts[id] = {...formData}
         }
     }
 
