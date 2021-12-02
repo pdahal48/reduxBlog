@@ -2,28 +2,32 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Comment from './Comment';
 import { Form, Row, Col } from 'react-bootstrap';
-import { v4 as uuid } from 'uuid';
-import { useSelector, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { fetchComments } from './Redux/actions';
 import './Comments.css'
 
 const Comments = () => {
     const { id } = useParams();
-    const [reviews, setReviews] = useState([]);
-    const { postComments } = useSelector((store) => store, shallowEqual);
+    const { comments } = useSelector((store) => store, shallowEqual);
+    const dispatch = useDispatch();
 
     const INITIAL_STATE = {
         newComment: ""
     }
 
     const [formData, setFormData] = useState(INITIAL_STATE);
-    useEffect(() => getComments(), [id, formData])
 
-    function getComments() {
-        const blogComments = Object.keys(postComments).filter((commentId) => (
-            postComments[commentId]['postId'] === id
-        ));
-        setReviews(blogComments)
-    };
+    // function getComments() {
+    //     const blogComments = Object.keys(postComments).filter((commentId) => (
+    //         postComments[commentId]['postId'] === id
+    //     ));
+    //     setReviews(blogComments)
+    // };
+
+    useEffect(() => {
+        console.log('in useEffect')
+        dispatch(fetchComments(id))
+    }, [dispatch, id])
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -31,27 +35,29 @@ const Comments = () => {
     }
 
     const handleAdd = () => {
-        postComments[uuid()] = {
-            "postId": id,
-            "comment": formData.newComment
-        }
-        setFormData(INITIAL_STATE)
+        // postComments[uuid()] = {
+        //     "postId": id,
+        //     "comment": formData.newComment
+        // }
+        // setFormData(INITIAL_STATE)
+        console.log('add requested')
     }
 
     function delComment(e) {
-        delete postComments[e.target.id]
-        getComments()
+        console.log('delete requested')
+        // delete postComments[e.target.id]
+        // getComments()
     }
     
     return (
         <div className="comments">
             <h3 className="comments-header">Comments</h3>
             <div>
-                {reviews.map((r) => (
+                {comments.map((c) => (
                     <Comment 
-                        comment = {postComments[r]['comment']}
-                        key={postComments[r]['id']}
-                        id={r}
+                        comment = {c.text}
+                        key={c.id}
+                        id={c.id}
                         delComment = {delComment}
                     />
                 ))}

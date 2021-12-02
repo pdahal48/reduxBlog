@@ -1,4 +1,4 @@
-import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST} from "./actionTypes";
+import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST, GET_COMMENTS} from "./actionTypes";
 import { BlogAPI as API } from '../API';
 
 export function getPosts() {
@@ -28,6 +28,21 @@ export function gotPost(post) {
         post
     }
 }
+
+export function fetchComments(post_id) {
+    return async function (dispatch) {
+        const comments = await API.getComments(post_id);
+        dispatch(gotComments(comments));
+    }
+}
+
+export function gotComments(comments) {
+    return {
+        type: GET_COMMENTS,
+        comments
+    }
+}
+
 // export function addPost({id, post}) {
 //     return {
 //         type: ADD_POST,

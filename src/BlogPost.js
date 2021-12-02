@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import PostForm from './PostForm'
-import Comments from './Comments'
+import Comment from './Comment';
 import { Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { getPost } from './Redux/actions'
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import './BlogPost.css'
+import Comments from './Comments';
 
 const editIcon = <FontAwesomeIcon icon={faEdit} />
 
@@ -21,7 +22,7 @@ const BlogPost = () => {
 
     useEffect(() => {
         dispatch(getPost(id))
-    }, [dispatch])
+    },[dispatch])
 
     const navigate = useNavigate(); 
 
@@ -77,7 +78,7 @@ const BlogPost = () => {
                     </Row>
                     </div>
                     <div className="text-start mt-3">
-                        {/* <Comments /> */}
+                        {<Comments />}
                     </div>
                 </div>
             </Container>

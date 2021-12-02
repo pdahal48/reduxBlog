@@ -43,4 +43,9 @@ export class BlogAPI {
     let res = await this.request(`api/posts/${id}`);
     return res;
   }
+
+  static async getComments(post_id) {
+    let res = await this.request(`api/posts/${post_id}/comments`);
+    return res;
+  }
 }

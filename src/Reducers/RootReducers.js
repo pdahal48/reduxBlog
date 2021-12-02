@@ -1,4 +1,4 @@
-import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST} from "../Redux/actionTypes";
+import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST, GET_COMMENTS} from "../Redux/actionTypes";
 
 const INITIAL_STATE = {
     blogPosts: {},
@@ -17,6 +17,13 @@ const RootReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state, 
                blogPosts: action.post
+            }
+        }
+
+        case GET_COMMENTS: {
+            return {
+                ...state,
+                comments: action.comments
             }
         }
 
