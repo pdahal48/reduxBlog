@@ -1,15 +1,26 @@
-import data from '../db.json'
-import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT } from "../Redux/actionTypes";
+import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST} from "../Redux/actionTypes";
 
 const INITIAL_STATE = {
-    blogPosts: data.Posts,
-    postComments: data.blogComments
+    blogPosts: {},
+    titles: []
 }
 
 const RootReducer = (state=INITIAL_STATE, action) => {
     switch(action.type) {
+        case GET_POSTS: {
+           return {
+               ...state, titles:action.posts
+           }
+        }
+
+        case GET_POST: {
+            return {
+                ...state, 
+               blogPosts: action.post
+            }
+        }
+
         case ADD_POST: {
-            console.log(action)
             const blogPostsCopy = { ...state.blogPosts };
             blogPostsCopy[action.id] = { ...action.post };
             return {

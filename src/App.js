@@ -1,6 +1,5 @@
 import Navbar from './Navbar';
 import SiteRoutes from './SiteRoutes';
-import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 
 function App() {
