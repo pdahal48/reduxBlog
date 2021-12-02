@@ -17,14 +17,17 @@ const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
         setFormData(data => ({...data, [name]: value}));
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
         if (Validate(formData.title, formData.description, formData.body)) {
             let id = uuid()
             dispatch(addPost({
                id, 
                post: formData
-            }))  
-    }}
+            }))
+        } else {
+            e.preventDefault();
+        }
+    }
 
     const handleEditSubmit = () => {
         if (Validate(formData.title, formData.description, formData.body)) {
