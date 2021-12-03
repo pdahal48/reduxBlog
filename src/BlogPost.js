@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import PostForm from './PostForm'
-import Comment from './Comment';
 import { Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
 import { getPost } from './Redux/actions'
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import './BlogPost.css'
 import Comments from './Comments';
+import './BlogPost.css'
 
 const editIcon = <FontAwesomeIcon icon={faEdit} />
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Validate } from './helpers'
 import { v4 as uuid } from 'uuid';
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-// import { addPost } from './Redux/actions';
+import { addPost } from './Redux/actions';
 
 const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
 
@@ -17,17 +17,17 @@ const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
         setFormData(data => ({...data, [name]: value}));
     }
 
-    // const handleSubmit = (e) => {
-    //     if (Validate(formData.title, formData.description, formData.body)) {
-    //         let id = uuid()
-    //         dispatch(addPost({
-    //            id, 
-    //            post: formData
-    //         }))
-    //     } else {
-    //         e.preventDefault();
-    //     }
-    // }
+    const handleSubmit = (e) => {
+        if (Validate(formData.title, formData.description, formData.body)) {
+            let id = uuid()
+            dispatch(addPost({
+               id, 
+               post: formData
+            }))
+        } else {
+            e.preventDefault();
+        }
+    }
 
     const handleEditSubmit = () => {
         if (Validate(formData.title, formData.description, formData.body)) {
@@ -73,14 +73,14 @@ const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
                     />
                 </Form.Group>
                 <Link to="/">
-                    {/* <button 
+                    <button 
                         className="btn btn-primary" 
                         onClick={
                             edited ?  handleEditSubmit : handleSubmit
                         }
                         >
                         Save
-                    </button>                 */}
+                    </button>                
                 </Link>
                 <Link to="/">
                     <button className="btn btn-secondary m-2 btn-sm">Cancel</button>

@@ -17,15 +17,7 @@ const Comments = () => {
 
     const [formData, setFormData] = useState(INITIAL_STATE);
 
-    // function getComments() {
-    //     const blogComments = Object.keys(postComments).filter((commentId) => (
-    //         postComments[commentId]['postId'] === id
-    //     ));
-    //     setReviews(blogComments)
-    // };
-
     useEffect(() => {
-        console.log('in useEffect')
         dispatch(fetchComments(id))
     }, [dispatch, id])
 
@@ -53,7 +45,7 @@ const Comments = () => {
         <div className="comments">
             <h3 className="comments-header">Comments</h3>
             <div>
-                {comments.map((c) => (
+                {comments !== undefined && comments.map((c) => (
                     <Comment 
                         comment = {c.text}
                         key={c.id}

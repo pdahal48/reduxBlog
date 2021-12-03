@@ -2,7 +2,6 @@ import React from 'react'
 import { Row, Col } from 'react-bootstrap';
 
 const Comment = ({ comment, delComment, id }) => {
-    console.log('AHHHHHHHH')
     return (
         <div>
             <Row>

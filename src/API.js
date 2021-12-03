@@ -48,4 +48,5 @@ export class BlogAPI {
     let res = await this.request(`api/posts/${post_id}/comments`);
     return res;
   }
+  
 }

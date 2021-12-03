@@ -43,13 +43,13 @@ export function gotComments(comments) {
     }
 }
 
-// export function addPost({id, post}) {
-//     return {
-//         type: ADD_POST,
-//         id,
-//         post
-//     }
-// };
+export function addPost({id, post}) {
+    return {
+        type: ADD_POST,
+        id,
+        post
+    }
+};
 
 // export function deletePost(id) {
 //     return {
