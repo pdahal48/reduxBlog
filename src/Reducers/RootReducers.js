@@ -28,11 +28,9 @@ const RootReducer = (state=INITIAL_STATE, action) => {
         }
 
         case ADD_POST: {
-            const blogPostsCopy = { ...state.blogPosts };
-            blogPostsCopy[action.id] = { ...action.post };
             return {
                 ...state,
-                blogPosts: blogPostsCopy
+                newPost: action.post
             }
         }
 

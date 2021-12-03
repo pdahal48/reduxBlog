@@ -1,5 +1,6 @@
 import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST, GET_COMMENTS} from "./actionTypes";
 import { BlogAPI as API } from '../API';
+import { PageItem } from "react-bootstrap";
 
 export function getPosts() {
     return async function (dispatch) {
@@ -43,10 +44,16 @@ export function gotComments(comments) {
     }
 }
 
-export function addPost({id, post}) {
+export function addPost(postData) {
+    return async function(dispatch) {
+        const post = await API.addsPost(postData);
+        dispatch(addedPost(post));
+    }
+}
+
+export function addedPost(post) {
     return {
         type: ADD_POST,
-        id,
         post
     }
 };

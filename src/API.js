@@ -44,9 +44,16 @@ export class BlogAPI {
     return res;
   }
 
+  static async addsPost(data) {
+    console.log(`data in api is ${data}`)
+    let res = await this.request(`api/posts`, data, "post");
+    console.log(`add post res in api is `, res)
+    return res;
+  }
+
   static async getComments(post_id) {
     let res = await this.request(`api/posts/${post_id}/comments`);
     return res;
   }
-  
+
 }

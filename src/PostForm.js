@@ -5,6 +5,7 @@ import { Validate } from './helpers'
 import { v4 as uuid } from 'uuid';
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import { addPost } from './Redux/actions';
+import { BlogAPI } from './API';
 
 const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
 
@@ -18,12 +19,11 @@ const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
     }
 
     const handleSubmit = (e) => {
+        console.log(`formData in submit is `, handleSubmit)
         if (Validate(formData.title, formData.description, formData.body)) {
-            let id = uuid()
-            dispatch(addPost({
-               id, 
-               post: formData
-            }))
+            dispatch(addPost(
+             formData
+            ))
         } else {
             e.preventDefault();
         }
