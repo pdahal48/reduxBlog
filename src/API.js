@@ -45,9 +45,18 @@ export class BlogAPI {
   }
 
   static async addsPost(data) {
-    console.log(`data in api is ${data}`)
     let res = await this.request(`api/posts`, data, "post");
-    console.log(`add post res in api is `, res)
+    return res;
+  }
+
+  static async deletesPost(id) {
+    let res = await this.request(`api/posts/${id}`, id, "delete");
+    return res;
+  }
+
+  static async editsPost(id, data) {
+    // console.log(`in api id is ${id}, title is ${title}, body is ${body} and desc is ${description}`)
+    let res = await this.request(`api/posts/${id}`, data, "put");
     return res;
   }
 
@@ -56,4 +65,13 @@ export class BlogAPI {
     return res;
   }
 
+  static async addsComment(post_id, data) {
+    let res = await this.request(`api/posts/${post_id}/comments`, data, "post");
+    return res;
+  }
+
+  static async deletesComment(post_id, comment_id) {
+    let res = await this.request(`api/posts/${post_id}/comments/${comment_id}`, comment_id, "delete");
+    return res;
+  }
 }

@@ -35,15 +35,33 @@ const RootReducer = (state=INITIAL_STATE, action) => {
         }
 
         case DELETE_POST: {
-            const blogPostsCopy = { ...state.blogPosts };
-            if (!blogPostsCopy[action.id]) return state;
-            delete blogPostsCopy[action.id];
             return {
                 ...state,
-                blogPosts: blogPostsCopy
+               res: action.res
+            }
+        }
+
+        case EDIT_POST: {
+            return {
+                ...state,
+                editedPost: action.post_data
             }
         }
         
+        case ADD_COMMENT: {
+            return {
+                ...state,
+                text: action.comment
+            }
+        }
+
+        case DELETE_COMMENT: {
+            return {
+                ...state,
+                res: action.res
+            }
+        }
+
         default: 
             return state;
     }

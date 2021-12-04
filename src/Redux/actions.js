@@ -1,6 +1,5 @@
 import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST, GET_COMMENTS} from "./actionTypes";
 import { BlogAPI as API } from '../API';
-import { PageItem } from "react-bootstrap";
 
 export function getPosts() {
     return async function (dispatch) {
@@ -58,30 +57,59 @@ export function addedPost(post) {
     }
 };
 
-// export function deletePost(id) {
-//     return {
-//         type: DELETE_POST,
-//         id
-//     }
-// };
+export function deletePost(id) {
+    return async function(dispatch) {
+        const res = await API.deletesPost(id);
+        dispatch(deletedPost(res))
+    }
+}
 
-// export function editPost(id) {
-//     return {
-//         type: EDIT_POST,
-//         id
-//     }
-// };
+export function deletedPost(res) {
+    return {
+        type: DELETE_POST,
+        res
+    }
+};
 
-// export function addComment(id) {
-//     return {
-//         type: ADD_COMMENT,
-//         id
-//     }
-// };
+export function editPost(id, data) {
+    return async function (dispatch) {
+        const res = await API.editsPost(id, data);
+        dispatch(editedPost(res))
+    }
+}
 
-// export function deleteComment(id) {
-//     return {
-//         type: DELETE_COMMENT,
-//         id
-//     }
-// };
+export function editedPost(id, post_data) {
+    return {
+        type: EDIT_POST,
+        id,
+        post_data
+    }
+};
+
+export function addComment(post_id, comment) {
+    return async function (dispatch) {
+        const res = await API.addsComment(post_id, comment);
+        dispatch(addedComment(res));
+    }
+}
+
+export function addedComment(id) {
+    return {
+        type: ADD_COMMENT,
+        id
+    }
+};
+
+export function deleteComment(post_id, comment_id) {
+    return async function (dispatch) {
+        const res = await API.deletesComment(post_id, comment_id);
+        dispatch(deletedComment(res))
+    }
+}
+
+export function deletedComment(res) {
+    return {
+        type: DELETE_COMMENT,
+        res
+    }
+};

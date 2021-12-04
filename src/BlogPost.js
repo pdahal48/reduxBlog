@@ -4,7 +4,7 @@ import PostForm from './PostForm'
 import { Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { getPost } from './Redux/actions'
+import { getPost, deletePost } from './Redux/actions'
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
 import Comments from './Comments';
 import './BlogPost.css'
@@ -33,14 +33,12 @@ const BlogPost = () => {
 
     const handleEdit = (e) => {
         e.preventDefault();
-        console.log('edit requested')
         setEditRequested(true);
     }
 
-    const handleDelete = () => {
-        // delete blogPosts[id];
-        // navigate('/')
-        console.log('delete requested')
+    const handleDelete = (e) => {
+        dispatch(deletePost(id))
+        navigate('/')
     }
     
     return (

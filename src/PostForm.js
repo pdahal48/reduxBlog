@@ -2,10 +2,8 @@ import React, {useState} from 'react'
 import { Form, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import { Validate } from './helpers'
-import { v4 as uuid } from 'uuid';
 import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { addPost } from './Redux/actions';
-import { BlogAPI } from './API';
+import { addPost, editPost } from './Redux/actions';
 
 const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
 
@@ -31,7 +29,8 @@ const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
 
     const handleEditSubmit = () => {
         if (Validate(formData.title, formData.description, formData.body)) {
-            blogPosts[id] = {...formData}
+            dispatch(editPost(id, formData))
+            console.log('edit completed')
         }
     }
 

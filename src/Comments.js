@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import Comment from './Comment';
 import { Form, Row, Col } from 'react-bootstrap';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { fetchComments } from './Redux/actions';
+import { fetchComments, addComment, deleteComment } from './Redux/actions';
 import './Comments.css'
 
 const Comments = () => {
@@ -12,33 +12,27 @@ const Comments = () => {
     const dispatch = useDispatch();
 
     const INITIAL_STATE = {
-        newComment: ""
+        text: ""
     }
 
     const [formData, setFormData] = useState(INITIAL_STATE);
 
     useEffect(() => {
         dispatch(fetchComments(id))
-    }, [dispatch, id])
+    }, [dispatch])
 
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormData(data => ({...data, [name]: value}));
     }
-
+    
     const handleAdd = () => {
-        // postComments[uuid()] = {
-        //     "postId": id,
-        //     "comment": formData.newComment
-        // }
-        // setFormData(INITIAL_STATE)
-        console.log('add requested')
+        dispatch(addComment(id, formData))
+        setFormData(INITIAL_STATE)
     }
 
     function delComment(e) {
-        console.log('delete requested')
-        // delete postComments[e.target.id]
-        // getComments()
+        dispatch(deleteComment(id, e.target.id));
     }
     
     return (
@@ -61,10 +55,10 @@ const Comments = () => {
                     <Form.Group>
                         <Form.Control 
                             type="text"
-                            id="newComment"
-                            name="newComment"
+                            id="text"
+                            name="text"
                             placeholder="Share your views"
-                            value={formData.newComment}
+                            value={formData.text}
                             onChange={handleChange}
                         />
                     </Form.Group>
@@ -79,7 +73,6 @@ const Comments = () => {
                         </button>
                     </Col>
                 </Row>
-
         </div>      
         </div>
     )

@@ -4,6 +4,9 @@ CREATE DATABASE "microblog";
 
 \c "microblog"
 
+DROP table posts ON DELETE CASCADE;
+DROP table comments;
+
 CREATE TABLE posts (id SERIAL PRIMARY KEY, 
                     title TEXT NOT NULL, 
                     description TEXT NOT NULL,
