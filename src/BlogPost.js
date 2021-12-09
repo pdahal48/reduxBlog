@@ -4,10 +4,11 @@ import PostForm from './PostForm'
 import { Container, Row, Col } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
-import { getPost, deletePost } from './Redux/actions'
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
+import { getPost, editPost, deletePost } from './Redux/postActions'
+import { useSelector, useDispatch } from "react-redux";
 import Comments from './Comments';
 import './BlogPost.css'
+import { EDIT_POST } from './Redux/actionTypes'
 
 const editIcon = <FontAwesomeIcon icon={faEdit} />
 
@@ -15,39 +16,49 @@ const BlogPost = () => {
 
     const { id } = useParams();
     const [editRequested, setEditRequested] = useState(false);
-
-    const post = useSelector((store) => store.blogPosts, shallowEqual);
+    const post = useSelector(store => store.PostReducer[id]);
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
-    useEffect(() => {
-        dispatch(getPost(id))
-    },[dispatch])
+    useEffect(function loadPost() {
+        async function getPostFromAPI() {
+            dispatch(getPost(id))
+        }
+        if (!post) {
+            getPostFromAPI();
+        }
 
-    const navigate = useNavigate(); 
+    },[dispatch, id, post])
 
-    const INITIAL_STATE = {
-        title: post.title,
-        description: post.description,
-        body: post.body
+    const toggleEdit = () => {
+        setEditRequested(edit => !edit);
     }
 
-    const handleEdit = (e) => {
-        e.preventDefault();
-        setEditRequested(true);
+    const save = ({title, description, body}) => {
+        dispatch(editPost(id, title, description, body))
+        toggleEdit();
     }
 
     const handleDelete = (e) => {
         dispatch(deletePost(id))
         navigate('/')
     }
-    
+
+    function delComment(e) {
+        // dispatch(deleteComment(id, e.target.id));
+        console.log('comment delete equested')
+        setEditRequested(false)
+    }
+
+    if (!post) return <h2 className="text-secondary">Loading</h2>;
+
     return (
         <div>
             { editRequested ?
             <Container className="col-3 my-3">
             <Row className="newPostForm text-start">
                 <h2 className="text-secondary">New Post</h2>
-                <PostForm INITIAL_STATE={INITIAL_STATE} edited={true} id={id}/>
+                <PostForm save={save} post={post}/>
             </Row>
             </Container>
             :
@@ -59,7 +70,7 @@ const BlogPost = () => {
                             <b>{post.title}</b>
                         </Col>
                         <Col className="col-2">
-                            <span className="edit-icon text-primary" onClick={handleEdit}> {editIcon} </span>
+                            <span className="edit-icon text-primary" onClick={toggleEdit}> {editIcon} </span>
                             <span className="text-danger del-icon mx-2" onClick={handleDelete}> X </span>
                         </Col>
                     </Row>
@@ -75,7 +86,7 @@ const BlogPost = () => {
                     </Row>
                     </div>
                     <div className="text-start mt-3">
-                        {<Comments />}
+                        <Comments comments = {post.comments} delComment = {delComment} />
                     </div>
                 </div>
             </Container>

@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5000";
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:5550";
 
 /** API Class.
  *
@@ -54,8 +54,12 @@ export class BlogAPI {
     return res;
   }
 
-  static async editsPost(id, data) {
-    // console.log(`in api id is ${id}, title is ${title}, body is ${body} and desc is ${description}`)
+  static async editsPost(id, title, description, body) {
+
+    let data = {
+      title, description, body
+    }
+    console.log(`in api id is ${id}, title is ${title}, body is ${body} and desc is ${description}`)
     let res = await this.request(`api/posts/${id}`, data, "put");
     return res;
   }

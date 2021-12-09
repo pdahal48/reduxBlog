@@ -2,14 +2,14 @@ import React, {useState} from 'react'
 import { Form, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom'
 import { Validate } from './helpers'
-import { useSelector, shallowEqual, useDispatch } from "react-redux";
-import { addPost, editPost } from './Redux/actions';
 
-const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
+const PostForm = ({ post, save }) => {
 
-    const [formData, setFormData] = useState(INITIAL_STATE);
-    const dispatch = useDispatch();
-    const { blogPosts } = useSelector((store) => store, shallowEqual)
+    const [formData, setFormData] = useState({
+        title: post.title,
+        description: post.description,
+        body: post.body
+    });
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -17,26 +17,14 @@ const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
     }
 
     const handleSubmit = (e) => {
-        console.log(`formData in submit is `, handleSubmit)
+        e.preventDefault()
         if (Validate(formData.title, formData.description, formData.body)) {
-            dispatch(addPost(
-             formData
-            ))
-        } else {
-            e.preventDefault();
+           save(formData)
         }
     }
-
-    const handleEditSubmit = () => {
-        if (Validate(formData.title, formData.description, formData.body)) {
-            dispatch(editPost(id, formData))
-            console.log('edit completed')
-        }
-    }
-
     return (
         <Col className="col-12">
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Form.Group>
                     <Form.Label className="text-start text-secondary">Title:</Form.Label>
                     <Form.Control
@@ -61,22 +49,21 @@ const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
                 </Form.Group>
                 <Form.Group>
                     <Form.Label className="text-secondary">Body:</Form.Label>
-                    <Form.Control
+                    <textarea
                         type="text"
                         id="body"
                         name="body"
                         placeholder="Enter the blog content"
-                        className="body-input"
                         value={formData.body}
                         onChange={handleChange}
+                        className="form-control"
+                        rows={10}
                     />
                 </Form.Group>
                 <Link to="/">
                     <button 
                         className="btn btn-primary" 
-                        onClick={
-                            edited ?  handleEditSubmit : handleSubmit
-                        }
+                        onClick={ handleSubmit }
                         >
                         Save
                     </button>                
@@ -87,6 +74,14 @@ const PostForm = ({ INITIAL_STATE, id, edited=false }) => {
             </Form>
         </Col>
     )
+}
+
+PostForm.defaultProps = {
+    post: {
+        title: "",
+        description: "",
+        body: ""
+    }
 }
 
 export default PostForm;

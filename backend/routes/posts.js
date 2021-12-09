@@ -123,6 +123,7 @@ router.post("/", async function (req, res, next) {
 router.put("/:id", async function (req, res, next) {
   try {
     const { title, body, description } = req.body;
+    console.log(req.body)
     console.log(`this is what m receiving in the backend`, title, body, description);
     const result = await db.query(
       `UPDATE posts SET title=$1, description=$2, body=$3

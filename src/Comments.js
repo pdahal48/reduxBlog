@@ -3,38 +3,35 @@ import { useParams } from 'react-router-dom'
 import Comment from './Comment';
 import { Form, Row, Col } from 'react-bootstrap';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { fetchComments, addComment, deleteComment } from './Redux/actions';
+// import { fetchComments, addComment, deleteComment } from './Redux/actions';
 import './Comments.css'
 
-const Comments = () => {
-    const { id } = useParams();
-    const { comments } = useSelector((store) => store, shallowEqual);
-    const dispatch = useDispatch();
+const Comments = ({comments=[], delComment}) => {
 
     const INITIAL_STATE = {
         text: ""
     }
 
     const [formData, setFormData] = useState(INITIAL_STATE);
-
-    useEffect(() => {
-        dispatch(fetchComments(id))
-    }, [dispatch])
-
     const handleChange = (e) => {
         const {name, value} = e.target;
         setFormData(data => ({...data, [name]: value}));
     }
     
-    const handleAdd = () => {
-        dispatch(addComment(id, formData))
-        setFormData(INITIAL_STATE)
-    }
+    // const handleAdd = () => {
+    //     dispatch(addComment(id, formData))
+    //     setFormData(INITIAL_STATE)
+    // }
 
-    function delComment(e) {
-        dispatch(deleteComment(id, e.target.id));
-    }
+    // function delComment(e) {
+    //     dispatch(deleteComment(id, e.target.id));
+    // }
     
+    // useEffect(() => {
+    //     dispatch(fetchComments(id))
+    // }, [dispatch])
+
+
     return (
         <div className="comments">
             <h3 className="comments-header">Comments</h3>
@@ -67,7 +64,7 @@ const Comments = () => {
                     <Col className="col-2 mt-2">
                         <button 
                             className="btn btn-outline-success"
-                            onClick={handleAdd}
+                            // onClick={handleAdd}
                             >
                             Add
                         </button>

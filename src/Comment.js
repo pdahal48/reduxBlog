@@ -1,7 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap';
 
-const Comment = ({ comment, delComment, id }) => {
+const Comment = ({comment, delComment, id }) => {
     return (
         <div>
             <Row>

@@ -22,3 +22,19 @@
 }
 
 
+.comments-header {
+    color: burlywood;
+}
+
+.comments {
+    /* border: 1px solid white; */
+    padding: 10px;
+    box-shadow: 0 8px 8px 0 rgba(241, 232, 232, 0.877);
+    border-radius: 5px;
+}
+
+.del-btn {
+    color: red;
+    font-size: 1.4rem;
+    cursor:pointer;
+}
