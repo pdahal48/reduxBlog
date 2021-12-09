@@ -69,8 +69,8 @@ export class BlogAPI {
     return res;
   }
 
-  static async addsComment(post_id, data) {
-    let res = await this.request(`api/posts/${post_id}/comments`, data, "post");
+  static async addsComment(post_id, text) {
+    let res = await this.request(`api/posts/${post_id}/comments/`, {text}, "post");
     return res;
   }
 

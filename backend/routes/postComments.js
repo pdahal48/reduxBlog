@@ -31,6 +31,7 @@ router.get("/", async function (req, res, next) {
 
 router.post("/", async function (req, res, next) {
   try {
+    console.log([req.body.text, req.params.post_id])
     const result = await db.query(
       `INSERT INTO comments (text, post_id) VALUES ($1, $2) 
         RETURNING id, text`,

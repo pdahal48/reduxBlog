@@ -1,15 +1,20 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap';
 
-const Comment = ({comment, delComment, id }) => {
+const Comment = ({comment, delComment, comment_id }) => {
+    
+    function handleDelete() {
+        delComment(comment_id)
+    }
+
     return (
         <div>
             <Row>
                 <Col className="col-10 text-secondary">
                     <span 
                         className="del-btn mx-2" 
-                        id={id}
-                        onClick={delComment}
+                        id={comment_id}
+                        onClick={handleDelete}
                     >
                         X
                     </span>

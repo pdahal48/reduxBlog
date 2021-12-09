@@ -68,16 +68,32 @@ export function editedPost(post) {
     }
 };
 
-// export function deleteComment(post_id, comment_id) {
-//     return async function (dispatch) {
-//         const res = await API.deletesComment(post_id, comment_id);
-//         dispatch(deletedComment(res))
-//     }
-// }
+export function addComment(post_id, text) {
+    return async function (dispatch) {
+        const res = await API.addsComment(post_id, text);
+        return dispatch(addedComment(post_id, res))
+    }
+}
 
-// export function deletedComment(res) {
-//     return {
-//         type: DELETE_COMMENT,
-//         res
-//     }
-// };
+export function addedComment(id, comment) {
+    return {
+        type: ADD_COMMENT,
+        id,
+        comment
+    }
+}
+
+export function deleteComment(post_id, comment_id) {
+    return async function (dispatch) {
+       await API.deletesComment(post_id, comment_id);
+        dispatch(deletedComment(post_id, comment_id))
+    }
+}
+
+export function deletedComment(id, comment_id) {
+    return {
+        type: DELETE_COMMENT,
+        id, 
+        comment_id
+    }
+};
