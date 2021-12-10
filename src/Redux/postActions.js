@@ -1,4 +1,4 @@
-import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST, GET_COMMENTS} from "./actionTypes";
+import { ADD_POST, DELETE_POST, EDIT_POST, ADD_COMMENT, DELETE_COMMENT, GET_POSTS, GET_POST, GET_COMMENTS, VOTE} from "./actionTypes";
 import { BlogAPI as API } from '../API';
 
 export function getPost(id) {
@@ -95,5 +95,20 @@ export function deletedComment(id, comment_id) {
         type: DELETE_COMMENT,
         id, 
         comment_id
+    }
+}
+
+export function sendVoteToAPI(id, direction) {
+    return async function(dispatch) {
+        const res = await API.sendVote(id, direction);
+        return dispatch(vote(id, res.votes))
+    }
+}
+
+export function vote(id, votes) {
+    return {
+        type: VOTE,
+        id,
+        votes: votes
     }
 };

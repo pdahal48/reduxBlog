@@ -78,4 +78,9 @@ export class BlogAPI {
     let res = await this.request(`api/posts/${post_id}/comments/${comment_id}`, comment_id, "delete");
     return res;
   }
+
+  static async sendVote(id, direction) {
+    let res = await this.request(`api/posts/${id}/vote/${direction}`, id, "post");
+    return res;
+  }
 }
